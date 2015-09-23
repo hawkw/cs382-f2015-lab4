@@ -116,7 +116,7 @@ class Tree {
         translate(0, branch_length, 0);
         if (level == max_level) {
           fill(LEAF_COLOR, 200);
-          sphere(30);
+          sphere(size/6);
         } else {
           for (Tree branch: branches)
             branch.draw();
