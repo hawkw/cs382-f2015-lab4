@@ -3,7 +3,7 @@ color LEAF_COLOR = #04AF02;
 float MAX_BRANCHES = 5;
 float MIN_BRANCHES = 3;
 float LENGTH_COEFF = 0.75;
-float WIDTH_COEFF  = 0.4;
+float WIDTH_COEFF  = 0.6;
 float ROT_AMOUNT = 15;
 float TRUNK_POLYS = 16;
 float TRUNK_INCR = TWO_PI/TRUNK_POLYS;
@@ -54,9 +54,9 @@ class Tree {
 
     this.branches  = mk_branches();
 
-    branch_length = -size * pow(LENGTH_COEFF, level);
-    branch_width  = size/4.5 * pow(WIDTH_COEFF, level);
-    branch_color  = lerpColor( TRUNK_COLOR
+    this.branch_length = -this.size * pow(LENGTH_COEFF, level);
+    this.branch_width  = this.size/4.5 * pow(WIDTH_COEFF, level);
+    this.branch_color  = lerpColor( TRUNK_COLOR
                               , LEAF_COLOR
                               , (float)level / ((float)max_level + 2)
                               );
@@ -71,9 +71,9 @@ class Tree {
 
     this.branches  = mk_branches();
 
-    branch_length = -size * pow(LENGTH_COEFF, level);
-    branch_width  = size/4.5 * pow(WIDTH_COEFF, level);
-    branch_color  = lerpColor( TRUNK_COLOR
+    this.branch_length = -this.size * pow(LENGTH_COEFF, level);
+    this.branch_width  = this.size/4.5 * pow(WIDTH_COEFF, level);
+    this.branch_color  = lerpColor( TRUNK_COLOR
                               , LEAF_COLOR
                               , (float)level / ((float)max_level + 2)
                               );
