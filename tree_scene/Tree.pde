@@ -8,7 +8,7 @@ float ROT_AMOUNT = 15;
 float TRUNK_POLYS = 16;
 float TRUNK_INCR = TWO_PI/TRUNK_POLYS;
 
-void cylendar(float radius, float length) {
+void trunk_sgmt(float radius, float length) {
   float theta = 0;
   noStroke();
   pushMatrix();
@@ -17,13 +17,14 @@ void cylendar(float radius, float length) {
   beginShape(QUAD_STRIP);
   for (int i = 0; i <= TRUNK_POLYS; i++) {
     // draw the top vertex
-    vertex ( radius * cos(theta)
-           , length
-           , radius * sin(theta)
+    float top_rad = 3 * (radius/4);
+    vertex ( top_rad * cos(theta)
+           , 0
+           , top_rad * sin(theta)
            );
     // draw the bottom vertex
     vertex( radius * cos(theta)
-          , 0
+          , length
           , radius * sin(theta)
           );
     theta = theta + TRUNK_INCR;
@@ -111,7 +112,7 @@ class Tree {
         }
 
         fill(branch_color);
-        cylendar(branch_width, branch_length);
+        trunk_sgmt(branch_width, branch_length);
         translate(0, branch_length, 0);
         for (Tree branch: branches)
           branch.draw();
