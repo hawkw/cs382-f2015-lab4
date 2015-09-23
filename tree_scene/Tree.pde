@@ -1,12 +1,13 @@
-color TRUNK_COLOR = #814300;
-color LEAF_COLOR = #04AF02;
+color TRUNK_COLOR  = #814300;
+color LEAF_COLOR   = #04AF02;
+int   LEAF_ALPHA   = 140;
 float MAX_BRANCHES = 5;
 float MIN_BRANCHES = 3;
 float LENGTH_COEFF = 0.75;
 float WIDTH_COEFF  = 0.6;
-float ROT_AMOUNT = 15;
-float TRUNK_POLYS = 16;
-float TRUNK_INCR = TWO_PI/TRUNK_POLYS;
+float ROT_AMOUNT   = 15;
+float TRUNK_POLYS  = 16;
+float TRUNK_INCR   = TWO_PI/TRUNK_POLYS;
 
 void trunk_sgmt(float radius, float length) {
   float theta = 0;
@@ -115,7 +116,7 @@ class Tree {
         trunk_sgmt(branch_width, branch_length);
         translate(0, branch_length, 0);
         if (level == max_level) {
-          fill(LEAF_COLOR, 200);
+          fill(LEAF_COLOR, LEAF_ALPHA);
           sphere(size/6);
         } else {
           for (Tree branch: branches)
