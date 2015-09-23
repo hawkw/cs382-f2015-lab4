@@ -1,15 +1,15 @@
 color TRUNK_COLOR = #814300;
+color LEAF_COLOR = #04AF02;
 float MAX_BRANCHES = 4;
 float MIN_BRANCHES = 2;
-float LENGTH_COEFF = 0.8;
-float WIDTH_COEFF  = 0.3;
-float ROT_AMOUNT = 25;
+float LENGTH_COEFF = 0.75;
+float WIDTH_COEFF  = 0.4;
+float ROT_AMOUNT = 15;
 float TRUNK_POLYS = 16;
 float TRUNK_INCR = TWO_PI/TRUNK_POLYS;
 
 void cylendar(float radius, float length) {
   float theta = 0;
-  fill(TRUNK_COLOR);
   noStroke();
   pushMatrix();
   rotateX(PI);
@@ -46,21 +46,28 @@ class Tree {
 
     rotations = new PVector[max_level];
     for (int i = 0; i < max_level; i++)
-      rotations[i] = PVector.fromAngle(random(0, ROT_AMOUNT));
+      rotations[i] 
+        = PVector.fromAngle(random(-ROT_AMOUNT, ROT_AMOUNT));
 
   }
 
   void branch(int level) {
     if (level <= max_level) {
       float branch_length = -size * pow(LENGTH_COEFF, level);
-      float branch_width  = size/4 * pow(WIDTH_COEFF, level);
+      float branch_width  = size/4.5 * pow(WIDTH_COEFF, level);
+      float lerp_amount = (float)level / ((float)max_level + 2);
+      fill(lerpColor( TRUNK_COLOR
+                    , LEAF_COLOR
+                    , lerp_amount
+                    ));
       cylendar(branch_width, branch_length);
       translate(0, branch_length, 0);
       for (PVector r: rotations) {
         //println(r);
         pushMatrix();
-          rotateX(radians(r.x));
-          rotateZ(radians(r.z));
+          rotateX(r.x);
+          //rotateY(r.y);
+          rotateZ(r.y);
           branch(level + 1);
         popMatrix();
       }
