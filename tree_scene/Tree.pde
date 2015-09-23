@@ -52,26 +52,14 @@ class Tree {
     this.pos       = pos;
     this.rotation  = rotation;
 
+    this.branches  = mk_branches();
+
     branch_length = -size * pow(LENGTH_COEFF, level);
     branch_width  = size/4.5 * pow(WIDTH_COEFF, level);
-    branch_color = lerpColor( TRUNK_COLOR
-                                , LEAF_COLOR
-                                , (float)level / ((float)max_level + 2)
-                                );
-
-    int n_branches = level <= max_level ?
-      (int)random(MIN_BRANCHES, MAX_BRANCHES) : 0;
-
-    branches = new Tree[n_branches];
-
-    for (int i = 0; i < n_branches; i++) {
-      float rot = random(-ROT_AMOUNT, ROT_AMOUNT);
-      branches[i] = new Tree( max_level
-                            , level + 1
-                            , size
-                            , pos
-                            , PVector.fromAngle(rot));
-    }
+    branch_color  = lerpColor( TRUNK_COLOR
+                              , LEAF_COLOR
+                              , (float)level / ((float)max_level + 2)
+                              );
   }
 
   Tree(int max_level, int size, PVector pos) {
@@ -80,27 +68,35 @@ class Tree {
     this.size      = size;
     this.pos       = pos;
     this.rotation  = PVector.fromAngle(0);
-    
+
+    this.branches  = mk_branches();
+
     branch_length = -size * pow(LENGTH_COEFF, level);
     branch_width  = size/4.5 * pow(WIDTH_COEFF, level);
     branch_color  = lerpColor( TRUNK_COLOR
-                                , LEAF_COLOR
-                                , (float)level / ((float)max_level + 2)
-                                );
+                              , LEAF_COLOR
+                              , (float)level / ((float)max_level + 2)
+                              );
+  }
 
+  Tree mk_branch() {
+    return new Tree( max_level
+                    , level + 1
+                    , size
+                    , pos
+                    , PVector.fromAngle(random(-ROT_AMOUNT, ROT_AMOUNT)));
+  }
+
+  Tree[] mk_branches() {
     int n_branches = level <= max_level ?
       (int)random(MIN_BRANCHES, MAX_BRANCHES) : 0;
 
-    branches = new Tree[n_branches];
+    Tree[] result = new Tree[n_branches];
 
-    for (int i = 0; i < n_branches; i++) {
-      float rot = random(-ROT_AMOUNT, ROT_AMOUNT);
-      branches[i] = new Tree( max_level
-                            , level + 1
-                            , size
-                            , pos
-                            , PVector.fromAngle(rot));
-    }
+    for (int i = 0; i < n_branches; i++)
+      result[i] = mk_branch();
+
+    return result;
   }
 
   void draw() {
@@ -113,7 +109,7 @@ class Tree {
           rotateX(rotation.x);
           rotateY(rotation.y);
         }
-        
+
         fill(branch_color);
         cylendar(branch_width, branch_length);
         translate(0, branch_length, 0);
