@@ -57,10 +57,10 @@ class Tree {
 
     this.branch_length = -this.size * pow(LENGTH_COEFF, level);
     this.branch_width  = this.size/4.5 * pow(WIDTH_COEFF, level);
-    this.branch_color  = lerpColor( TRUNK_COLOR
-                              , LEAF_COLOR
-                              , (float)level / ((float)max_level + 2)
-                              );
+    //this.branch_color  = lerpColor( TRUNK_COLOR
+    //                          , LEAF_COLOR
+    //                          , (float)level / ((float)max_level + 2)
+    //                          );
   }
 
   Tree(int max_level, int size, PVector pos) {
@@ -74,10 +74,10 @@ class Tree {
 
     this.branch_length = -this.size * pow(LENGTH_COEFF, level);
     this.branch_width  = this.size/4.5 * pow(WIDTH_COEFF, level);
-    this.branch_color  = lerpColor( TRUNK_COLOR
-                              , LEAF_COLOR
-                              , (float)level / ((float)max_level + 2)
-                              );
+    //this.branch_color  = lerpColor( TRUNK_COLOR
+    //                          , LEAF_COLOR
+    //                          , (float)level / ((float)max_level + 2)
+    //                          );
   }
 
   Tree mk_branch() {
@@ -89,7 +89,7 @@ class Tree {
   }
 
   Tree[] mk_branches() {
-    int n_branches = level <= max_level ?
+    int n_branches = level < max_level ?
       (int)random(MIN_BRANCHES, MAX_BRANCHES) : 0;
 
     Tree[] result = new Tree[n_branches];
@@ -111,11 +111,16 @@ class Tree {
           rotateY(rotation.y);
         }
 
-        fill(branch_color);
+        fill(TRUNK_COLOR);
         trunk_sgmt(branch_width, branch_length);
         translate(0, branch_length, 0);
-        for (Tree branch: branches)
-          branch.draw();
+        if (level == max_level) {
+          fill(LEAF_COLOR, 200);
+          sphere(30);
+        } else {
+          for (Tree branch: branches)
+            branch.draw();
+        }
       popMatrix();
     popMatrix();
   }
