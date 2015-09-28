@@ -1,13 +1,27 @@
 int day_cycle;
 boolean moon = true;
-Tree test;
+Tree tree0, tree1;
+float camX, camY, camZ;
+float lookX, lookY, lookZ;
+float angle, angleV;
+
 void setup() {
   size(800,600, P3D);
   noStroke();
 
   day_cycle = 0;
-  test = new Tree(5, 160, new PVector());
-}
+  tree0 = new Tree(5, 160, new PVector());
+  tree1 = new Tree(5, 200, new PVector(500, 0, 200));
+  
+  camX = 0;
+  camY = -100;
+  camZ = 1000;
+  lookX = 0;
+  lookY = 0;
+  lookZ = -100000;
+  angle = 0;
+  angleV = 0;
+} //setup
 
 void draw() {
   assert day_cycle >= 0 : "Day/night cycle was less than 0!";
@@ -38,31 +52,35 @@ void draw() {
     }//e
   }//keyPressed
   
-  //if moon
-  //Full moon
-  //spotlight coming from moon
-  ambientLight(18, 25, 31);
-  spotLight(177, 192, 203, 0, 0, 200, 0, 0, -1, PI/2, 2);
+  if(moon) {
+    //Full moon
+    //spotlight coming from moon
+    ambientLight(18, 25, 31);
+    spotLight(177, 192, 203, 0, 0, 2000, 0, 0, -1, PI/2, 1);
+  }
   
-  //if !moon
-  //New moon
-  //loooow ambient light with stars
-  ambientLight(18, 25, 31); 
-  directionalLight(69, 78, 85, 0, 1, -1);
+  if(!moon) {
+    //New moon
+    //loooow ambient light with stars
+    ambientLight(18, 25, 31); 
+    directionalLight(69, 78, 85, 0, 1, -1);
+  }
   
   //Camera
-  //Always looking at tree
-
+  //Always looking at tree?
   pushMatrix();
-  translate(width/2, 700, -50);
-  rotateY(radians(mouseY * (width / 360)));
-  test.draw();
+  translate(0,2500,0);
+  fill(57, 245, 70);
+  box(5000);
   popMatrix();
+  //pushMatrix();
+  //translate(width/2, 700, -50);
+  //rotateY(radians(mouseY * (width / 360)));
+  tree0.draw();
+  tree1.draw();
+  //popMatrix();
 
 
-  //camera( 0, 0, 1000
-  //   , mouseX, mouseY, -1000
-  //   , 0, 1, 0
-  //   );
-
-}
+  camera(camX, camY, camZ, lookX, lookY, lookZ, 0, 1, 0);
+  
+}//draw
