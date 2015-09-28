@@ -9,6 +9,17 @@ float ROT_AMOUNT   = 15;
 float TRUNK_POLYS  = 16;
 float TRUNK_INCR   = TWO_PI/TRUNK_POLYS;
 
+/**
+ * Draw a trunk segment with the specified starting radius
+ * and the specified length.
+ *
+ * All trunk segments are cones; this could be generalised
+ * into a function for drawing cones.
+ *
+ * @param  radius the thickest radius of the trunk segment
+ * @param  length the segment's length
+ * @author Hawk Weisman
+ */
 void trunk_sgmt(float radius, float length) {
   float theta = 0;
   noStroke();
@@ -34,6 +45,11 @@ void trunk_sgmt(float radius, float length) {
   popMatrix();
 }
 
+/**
+ * Draws a tree.
+ *
+ * @author Hawk Weisman
+ */
 class Tree {
   PVector pos;
   PVector rotation;
