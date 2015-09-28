@@ -1,10 +1,12 @@
 int day_cycle;
 boolean moon = true;
-
+Tree test;
 void setup() {
   size(800,600, P3D);
   noStroke();
+
   day_cycle = 0;
+  test = new Tree(5, 160, new PVector());
 }
 
 void draw() {
@@ -13,7 +15,7 @@ void draw() {
   //If day_cycle goes above 360, don't we just want it to go back to 0?
   //like, if(day_cycle >= 360) day_cycle = 0;
   //and if(day_cycle <= -1) day_cycle = 359;
-  
+  background(0);
   //Day lights
   //directional light
   
@@ -50,5 +52,17 @@ void draw() {
   
   //Camera
   //Always looking at tree
+
+  pushMatrix();
+  translate(width/2, 700, -50);
+  rotateY(radians(mouseY * (width / 360)));
+  test.draw();
+  popMatrix();
+
+
+  //camera( 0, 0, 1000
+  //   , mouseX, mouseY, -1000
+  //   , 0, 1, 0
+  //   );
 
 }
