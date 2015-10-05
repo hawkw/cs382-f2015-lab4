@@ -1,11 +1,17 @@
 int day_cycle;
 boolean moon = true;
 Tree tree0, tree1;
+<<<<<<< HEAD
 float cam_x, cam_y, cam_z
     , look_x, look_y, look_z;
 float angle, angleV;
 final int WALK_SPEED = 5;
 
+=======
+float camX, camY, camZ
+    , lookX, lookY, lookZ;
+float angle, angleV;
+>>>>>>> moon
 void setup() {
   size(800,600, P3D);
   noStroke();
@@ -58,11 +64,17 @@ void draw() {
   if(moon) {
     //Full moon
     //spotlight coming from moon
+    PVector moon_pos = PVector.fromAngle(radians(day_cycle));
     ambientLight(18, 25, 31);
-    spotLight(177, 192, 203, 0, 0, 2000, 0, 0, -1, PI/2, 1);
-  }
-
-  if(!moon) {
+    spotLight( 177, 192, 203
+              , moon_pos.x, moon_pos.y, 2000
+              , 0, 0, -1, PI/2, 1);
+    // draw the moon
+    pushMatrix();
+    translate(moon_pos.x, moon_pos.y, 2000);
+    sphere(30);
+    popMatrix();
+  } else {
     //New moon
     //loooow ambient light with stars
     ambientLight(18, 25, 31);
