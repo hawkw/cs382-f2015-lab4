@@ -30,10 +30,6 @@ void setup() {
 
 void draw() {
   background(0);
-  //Day lights
-  //directional light
-  ambientLight(106,104,68);
-  directionalLight(255,249,134,0,1,0);
 
   if(keyPressed) {
     switch (key) {
@@ -87,6 +83,13 @@ void draw() {
   fill(255,255,0);
   sphere(600);
   popMatrix();
+  
+  //Day lights
+  //directional light
+  if(day_cycle < 180) {
+    ambientLight(106,104,68);
+    directionalLight(255,249,134,-sun_x, -sun_y, 3000);
+  }
 
   pushMatrix();
   translate(0,2500,0);
