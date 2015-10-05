@@ -1,9 +1,10 @@
 int day_cycle;
 boolean moon = true;
 Tree tree0, tree1;
-float camX, camY, camZ;
-float lookX, lookY, lookZ;
+float cam_x, cam_y, cam_z
+    , look_x, look_y, look_z;
 float angle, angleV;
+final int WALK_SPEED = 5;
 
 void setup() {
   size(800,600, P3D);
@@ -13,12 +14,12 @@ void setup() {
   tree0 = new Tree(5, 160, new PVector());
   tree1 = new Tree(5, 200, new PVector(500, 0, 200));
   
-  camX = 0;
-  camY = -100;
-  camZ = 1000;
-  lookX = 0;
-  lookY = 0;
-  lookZ = -100000;
+  cam_x = 0;
+  cam_y = -100;
+  cam_z = 1000;
+  look_x = 0;
+  look_y = 0;
+  look_z = -100000;
   angle = 0;
   angleV = 0;
 } //setup
@@ -66,8 +67,6 @@ void draw() {
     directionalLight(69, 78, 85, 0, 1, -1);
   }
   
-  //Camera
-  //Always looking at tree?
   pushMatrix();
   translate(0,2500,0);
   fill(57, 245, 70);
@@ -79,8 +78,59 @@ void draw() {
   tree0.draw();
   tree1.draw();
   //popMatrix();
-
-
-  camera(camX, camY, camZ, lookX, lookY, lookZ, 0, 1, 0);
+  
+  if (keyPressed && (key == CODED))
+    keyboardInput();
+  
+  //Camera
+  update_camera(angle_h(), angle_v());
+  camera( cam_x, cam_y, cam_z
+        , look_x, look_y, look_z
+        , 0, 1, 0
+        );
   
 }//draw
+
+void keyboardInput() {
+  switch (keyCode) {
+     case LEFT:   
+       cam_x += WALK_SPEED * 
+                sin(radians(angle_h() - 90));
+       cam_z += WALK_SPEED * 
+                -cos(radians(angle_h() - 90));
+       break;
+     case RIGHT:
+       cam_x += WALK_SPEED * 
+                -sin(radians(angle_h() - 90));
+       cam_z += WALK_SPEED * 
+                cos(radians(angle_h() - 90));
+       break;
+     case UP:  
+       cam_x += WALK_SPEED * 
+                sin(radians(angle_h()));
+       cam_z += WALK_SPEED * 
+                -cos(radians(angle_h()));
+       break;
+     case DOWN:   
+       cam_x += WALK_SPEED * 
+                -sin(radians(angle_h()));
+       cam_z += WALK_SPEED * 
+                cos(radians(angle_h()));
+       break;
+     default: break;
+   }
+ }
+ 
+float angle_h() { return ((float)mouseX /
+                           (float)width - 0.5) * 360; }
+                     
+float angle_v() { return ((float)mouseY /
+                          (float)height - 0.5) * 180; }
+                                                   
+                          
+void update_camera(float theta_h, float theta_v) {
+  look_x = 100000 * sin(radians(theta_h));
+  look_y = 100000 * sin(radians(theta_v));
+  look_z = -100000 * cos(radians(theta_h));
+}
+   
