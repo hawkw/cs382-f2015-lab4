@@ -8,6 +8,7 @@ float angle, angleV;
 float moon_posx, moon_posy;
 final int WALK_SPEED = 5;
 final float MOON_Z = 2000;
+final float MOON_COEFF = 5000;
 
 void setup() {
   size(800,600, P3D);
@@ -58,8 +59,8 @@ void draw() {
   if(moon) {
     //Full moon
     //spotlight coming from moon
-    moon_posx=-1000*cos(radians(day_cycle));
-    moon_posy=1000*sin(radians(day_cycle));
+    moon_posx= -MOON_COEFF * cos(radians(day_cycle));
+    moon_posy= MOON_COEFF * sin(radians(day_cycle));
     ambientLight(18, 25, 31);
     spotLight( 177, 192, 203
               , moon_posx, moon_posy, MOON_Z
@@ -68,7 +69,7 @@ void draw() {
     pushMatrix();
     translate(moon_posx, moon_posy, MOON_Z);
     fill(255);
-    sphere(30);
+    sphere(300);
     popMatrix();
   } else {
     //New moon
@@ -76,6 +77,16 @@ void draw() {
     ambientLight(18, 25, 31);
     directionalLight(69, 78, 85, 0, 1, -1);
   }
+  
+  // sun
+  float sun_x, sun_y;
+  sun_x = MOON_COEFF * cos(radians(day_cycle));
+  sun_y = -MOON_COEFF * sin(radians(day_cycle));
+  pushMatrix();
+  translate(sun_x, sun_y, 3000);
+  fill(255,255,0);
+  sphere(600);
+  popMatrix();
 
   pushMatrix();
   translate(0,2500,0);
