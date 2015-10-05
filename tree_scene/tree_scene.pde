@@ -39,7 +39,7 @@ void draw() {
 
   if(keyPressed) {
     if(key == 'q' || key == 'Q') {
-      //decrease day_cycle
+      day_cycle-=1;
     }//q
 
     if(key == 'w' || key == 'W') {
@@ -52,7 +52,7 @@ void draw() {
     }//w
 
     if(key == 'e' || key == 'E') {
-      //increase day_cycle
+      day_cycle+=1;
     }//e
   }//keyPressed
 
@@ -81,12 +81,8 @@ void draw() {
   fill(57, 245, 70);
   box(5000);
   popMatrix();
-  //pushMatrix();
-  //translate(width/2, 700, -50);
-  //rotateY(radians(mouseY * (width / 360)));
   tree0.draw();
   tree1.draw();
-  //popMatrix();
 
   if (keyPressed && (key == CODED))
     keyboardInput();
