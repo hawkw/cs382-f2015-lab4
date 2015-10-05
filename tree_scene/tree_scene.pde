@@ -11,8 +11,8 @@ void setup() {
   noStroke();
 
   day_cycle = 0;
-  tree0 = new Tree(5, 160, new PVector());
-  tree1 = new Tree(5, 200, new PVector(500, 0, 200));
+  tree0 = new Tree(4, 160, new PVector());
+  tree1 = new Tree(4, 200, new PVector(500, 0, 200));
   
   cam_x = 0;
   cam_y = -100;
