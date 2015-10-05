@@ -13,7 +13,7 @@ void setup() {
   day_cycle = 0;
   tree0 = new Tree(4, 160, new PVector());
   tree1 = new Tree(4, 200, new PVector(500, 0, 200));
-  
+
   cam_x = 0;
   cam_y = -100;
   cam_z = 1000;
@@ -33,12 +33,14 @@ void draw() {
   background(0);
   //Day lights
   //directional light
-  
+  ambientLight(106,104,68);
+  directionalLight(255,249,134,0,1,0);
+
   if(keyPressed) {
     if(key == 'q' || key == 'Q') {
       //decrease day_cycle
     }//q
-    
+
     if(key == 'w' || key == 'W') {
       if(moon){
         moon = false;
@@ -47,26 +49,26 @@ void draw() {
         moon = true;
       }//else moon
     }//w
-    
+
     if(key == 'e' || key == 'E') {
       //increase day_cycle
     }//e
   }//keyPressed
-  
+
   if(moon) {
     //Full moon
     //spotlight coming from moon
     ambientLight(18, 25, 31);
     spotLight(177, 192, 203, 0, 0, 2000, 0, 0, -1, PI/2, 1);
   }
-  
+
   if(!moon) {
     //New moon
     //loooow ambient light with stars
-    ambientLight(18, 25, 31); 
+    ambientLight(18, 25, 31);
     directionalLight(69, 78, 85, 0, 1, -1);
   }
-  
+
   pushMatrix();
   translate(0,2500,0);
   fill(57, 245, 70);
@@ -78,59 +80,58 @@ void draw() {
   tree0.draw();
   tree1.draw();
   //popMatrix();
-  
+
   if (keyPressed && (key == CODED))
     keyboardInput();
-  
+
   //Camera
   update_camera(angle_h(), angle_v());
   camera( cam_x, cam_y, cam_z
         , look_x, look_y, look_z
         , 0, 1, 0
         );
-  
+
 }//draw
 
 void keyboardInput() {
   switch (keyCode) {
-     case LEFT:   
-       cam_x += WALK_SPEED * 
+     case LEFT:
+       cam_x += WALK_SPEED *
                 sin(radians(angle_h() - 90));
-       cam_z += WALK_SPEED * 
+       cam_z += WALK_SPEED *
                 -cos(radians(angle_h() - 90));
        break;
      case RIGHT:
-       cam_x += WALK_SPEED * 
+       cam_x += WALK_SPEED *
                 -sin(radians(angle_h() - 90));
-       cam_z += WALK_SPEED * 
+       cam_z += WALK_SPEED *
                 cos(radians(angle_h() - 90));
        break;
-     case UP:  
-       cam_x += WALK_SPEED * 
+     case UP:
+       cam_x += WALK_SPEED *
                 sin(radians(angle_h()));
-       cam_z += WALK_SPEED * 
+       cam_z += WALK_SPEED *
                 -cos(radians(angle_h()));
        break;
-     case DOWN:   
-       cam_x += WALK_SPEED * 
+     case DOWN:
+       cam_x += WALK_SPEED *
                 -sin(radians(angle_h()));
-       cam_z += WALK_SPEED * 
+       cam_z += WALK_SPEED *
                 cos(radians(angle_h()));
        break;
      default: break;
    }
  }
- 
+
 float angle_h() { return ((float)mouseX /
                            (float)width - 0.5) * 360; }
-                     
+
 float angle_v() { return ((float)mouseY /
                           (float)height - 0.5) * 180; }
-                                                   
-                          
+
+
 void update_camera(float theta_h, float theta_v) {
   look_x = 100000 * sin(radians(theta_h));
   look_y = 100000 * sin(radians(theta_v));
   look_z = -100000 * cos(radians(theta_h));
 }
-   
