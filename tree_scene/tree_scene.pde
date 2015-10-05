@@ -1,17 +1,12 @@
 int day_cycle;
 boolean moon = true;
 Tree tree0, tree1;
-<<<<<<< HEAD
+
 float cam_x, cam_y, cam_z
     , look_x, look_y, look_z;
 float angle, angleV;
 final int WALK_SPEED = 5;
 
-=======
-float camX, camY, camZ
-    , lookX, lookY, lookZ;
-float angle, angleV;
->>>>>>> moon
 void setup() {
   size(800,600, P3D);
   noStroke();
