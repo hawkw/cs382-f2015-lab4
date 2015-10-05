@@ -7,6 +7,7 @@ float cam_x, cam_y, cam_z
 float angle, angleV;
 float moon_posx, moon_posy;
 final int WALK_SPEED = 5;
+final float MOON_Z = 2000;
 
 void setup() {
   size(800,600, P3D);
@@ -34,27 +35,26 @@ void draw() {
   directionalLight(255,249,134,0,1,0);
 
   if(keyPressed) {
-    if(key == 'q' || key == 'Q') {
-      day_cycle-=1;
-    }//q
-
-    if(key == 'w' || key == 'W') {
-      if(moon){
-        moon = false;
-      }//if moon
-      else {
-        moon = true;
-      }//else moon
-    }//w
-
-    if(key == 'e' || key == 'E') {
-      day_cycle+=1;
-    }//e
-  }//keyPressed
-  
-  if(day_cycle >= 360) day_cycle = 0;
-  if(day_cycle <= -1) day_cycle = 359;
-
+    switch (key) {
+      case CODED: arrow_key();
+      case 'q':
+      case 'Q': day_cycle--;
+                break;
+      case 'e':
+      case 'E': day_cycle++;
+               break;
+      case 'w':
+      case 'W': if(moon){
+                  moon = false;
+                }//if moon
+                else {
+                  moon = true;
+                }//else moon
+                break;
+      default: break;
+    }
+  }
+   
   if(moon) {
     //Full moon
     //spotlight coming from moon
@@ -62,11 +62,12 @@ void draw() {
     moon_posy=1000*sin(radians(day_cycle));
     ambientLight(18, 25, 31);
     spotLight( 177, 192, 203
-              , moon_posx, moon_posy, 2000
+              , moon_posx, moon_posy, MOON_Z
               , 0, 0, -1, PI/2, 1);
     // draw the moon
     pushMatrix();
-    translate(moon_posx, moon_posy, 2000);
+    translate(moon_posx, moon_posy, MOON_Z);
+    fill(255);
     sphere(30);
     popMatrix();
   } else {
@@ -84,9 +85,6 @@ void draw() {
   tree0.draw();
   tree1.draw();
 
-  if (keyPressed && (key == CODED))
-    keyboardInput();
-
   //Camera
   update_camera(angle_h(), angle_v());
   camera( cam_x, cam_y, cam_z
@@ -96,7 +94,7 @@ void draw() {
 
 }//draw
 
-void keyboardInput() {
+void arrow_key() {
   switch (keyCode) {
      case LEFT:
        cam_x += WALK_SPEED *
