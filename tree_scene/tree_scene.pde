@@ -5,6 +5,7 @@ Tree tree0, tree1;
 float cam_x, cam_y, cam_z
     , look_x, look_y, look_z;
 float angle, angleV;
+float moon_posx, moon_posy;
 final int WALK_SPEED = 5;
 
 void setup() {
@@ -26,11 +27,6 @@ void setup() {
 } //setup
 
 void draw() {
-  assert day_cycle >= 0 : "Day/night cycle was less than 0!";
-  assert day_cycle <= 360 : "Day/night cycle count was greater than 360!";
-  //If day_cycle goes above 360, don't we just want it to go back to 0?
-  //like, if(day_cycle >= 360) day_cycle = 0;
-  //and if(day_cycle <= -1) day_cycle = 359;
   background(0);
   //Day lights
   //directional light
@@ -55,18 +51,22 @@ void draw() {
       day_cycle+=1;
     }//e
   }//keyPressed
+  
+  if(day_cycle >= 360) day_cycle = 0;
+  if(day_cycle <= -1) day_cycle = 359;
 
   if(moon) {
     //Full moon
     //spotlight coming from moon
-    PVector moon_pos = PVector.fromAngle(radians(day_cycle));
+    moon_posx=-1000*cos(radians(day_cycle));
+    moon_posy=1000*sin(radians(day_cycle));
     ambientLight(18, 25, 31);
     spotLight( 177, 192, 203
-              , moon_pos.x, moon_pos.y, 2000
+              , moon_posx, moon_posy, 2000
               , 0, 0, -1, PI/2, 1);
     // draw the moon
     pushMatrix();
-    translate(moon_pos.x, moon_pos.y, 2000);
+    translate(moon_posx, moon_posy, 2000);
     sphere(30);
     popMatrix();
   } else {
