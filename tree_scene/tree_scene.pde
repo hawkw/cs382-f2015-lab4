@@ -32,6 +32,8 @@ void draw() {
   background(0);
   //Day lights
   //directional light
+  ambientLight(106,104,68);
+  directionalLight(255,249,134,0,1,0);
   
   if(keyPressed) {
     if(key == 'q' || key == 'Q') {
@@ -80,7 +82,8 @@ void draw() {
   tree1.draw();
   //popMatrix();
 
-
+  keyboardInput();
+  mousePosition();
   camera(camX, camY, camZ, lookX, lookY, lookZ, 0, 1, 0);
   
 }//draw
