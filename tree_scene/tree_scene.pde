@@ -57,10 +57,10 @@ void draw() {
   }
 
   // important! do not delete!
-  if(day_cycle<=0) {
+  if(day_cycle <= 0) {
     day_cycle = 359;
   }
-  else if (day_cycle>=360) {
+  else if (day_cycle >= 360) {
     day_cycle = 0;
   }
   // Draw the sun or moon depending on the day/night cycle.
