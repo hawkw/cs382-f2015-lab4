@@ -46,8 +46,7 @@ void trunk_sgmt(float radius, float length) {
 }
 
 /**
- * Draws a tree.
- *
+ * A recursive, randomly-generated tree.
  * @author Hawk Weisman
  */
 class Tree {
@@ -63,6 +62,9 @@ class Tree {
   float branch_width;
   color branch_color;
 
+  /**
+   * Constructs a new Tree representing a branch from an existant tree.
+   */
   Tree(int max_level, int level, int size, PVector pos, PVector rotation) {
     this.level     = level;
     this.max_level = max_level;
@@ -80,6 +82,15 @@ class Tree {
     //                          );
   }
 
+  /**
+   * Constructs a new Tree at the specified position,
+   * and creates all its branches.
+   *
+   * @param max_level the maximum number of branches for the tree (5 is safe)
+   *                  if this is too high, your frame rate will suffer...
+   * @param size the size of the tree
+   * @param pos a PVector representing the position of the tree's base
+   */
   Tree(int max_level, int size, PVector pos) {
     this.level     = 0;
     this.max_level = max_level;
@@ -97,6 +108,11 @@ class Tree {
     //                          );
   }
 
+  /**
+   * Make a new Tree as a branch from this tree.
+   * @return a new Tree that is a branch from this Tree
+   * @author Hawk Weisman
+   */
   Tree mk_branch() {
     return new Tree( max_level
                     , level + 1
@@ -105,6 +121,11 @@ class Tree {
                     , PVector.fromAngle(random(-ROT_AMOUNT, ROT_AMOUNT)));
   }
 
+  /**
+   * Make all the branches of this Tree, returning a Tree array.
+   * @return an array of Trees representing the branches of this tree.
+   * @author Hawk Weisman
+   */
   Tree[] mk_branches() {
     int n_branches = level < max_level ?
       (int)random(MIN_BRANCHES, MAX_BRANCHES) : 0;
@@ -117,6 +138,11 @@ class Tree {
     return result;
   }
 
+  /**
+   * Draw this tree
+   * @return nothing
+   * @author Hawk Weisman
+   */
   void draw() {
     pushMatrix();
       if (level == 0)
