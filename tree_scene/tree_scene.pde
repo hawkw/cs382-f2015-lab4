@@ -30,10 +30,13 @@ void setup() {
 
 void draw() {
   background(0);
+  ambientLight(18, 25, 31);
 
   if(keyPressed) {
     switch (key) {
       case CODED: arrow_key();
+        break;
+      
       case 'q':
       case 'Q': day_cycle--;
                 break;
@@ -51,45 +54,54 @@ void draw() {
       default: break;
     }
   }
+  
+  if(day_cycle<=0) {day_cycle = 359;} //important!
+  if(day_cycle>=360) {day_cycle = 0;} //do not delete!
    
-  if(moon) {
+  if(moon&&day_cycle>179) {
     //Full moon
     //spotlight coming from moon
     moon_posx= -MOON_COEFF * cos(radians(day_cycle));
     moon_posy= MOON_COEFF * sin(radians(day_cycle));
-    ambientLight(18, 25, 31);
-    spotLight( 177, 192, 203
-              , moon_posx, moon_posy, MOON_Z
-              , 0, 0, -1, PI/2, 1);
+    spotLight( 177, 192, 203,
+               0, -1, 0, 
+               moon_posx, moon_posy, MOON_Z, 
+               PI/2, 1); //lights the moon
+    spotLight( 177, 192, 203,
+               moon_posx, moon_posy, MOON_Z, 
+               0, 0, -1, 
+               PI/2, 1);
     // draw the moon
     pushMatrix();
     translate(moon_posx, moon_posy, MOON_Z);
     fill(255);
     sphere(300);
     popMatrix();
-  } else {
-    //New moon
-    //loooow ambient light with stars
-    ambientLight(18, 25, 31);
-    directionalLight(69, 78, 85, 0, 1, -1);
-  }
+  } 
+  else {}
   
   // sun
   float sun_x, sun_y;
   sun_x = MOON_COEFF * cos(radians(day_cycle));
   sun_y = -MOON_COEFF * sin(radians(day_cycle));
-  pushMatrix();
-  translate(sun_x, sun_y, 3000);
-  fill(255,255,0);
-  sphere(600);
-  popMatrix();
   
   //Day lights
   //directional light
   if(day_cycle < 180) {
     ambientLight(106,104,68);
     directionalLight(255,249,134,-sun_x, -sun_y, 3000);
+    
+    spotLight( 252, 234, 64,
+               0, -1, 0, 
+               sun_x, sun_y, 3000, 
+               PI/2, 1); //lights the sun //well it should
   }
+  
+  pushMatrix();
+  translate(sun_x, sun_y, 3000);
+  fill(255,255,0);
+  sphere(600);
+  popMatrix();
 
   pushMatrix();
   translate(0,2500,0);
