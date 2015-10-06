@@ -50,12 +50,7 @@ void draw() {
       case 'E': day_cycle++;
                break;
       case 'w':
-      case 'W': if(moon){
-                  moon = false;
-                }//if moon
-                else {
-                  moon = true;
-                }//else moon
+      case 'W': moon = !moon;
                 break;
       default:  break;
     }
