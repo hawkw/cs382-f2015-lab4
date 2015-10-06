@@ -14,7 +14,7 @@ ______tree_scene.pde, Tree.pde__________________________________
 
 ________________________________________________________________
 
-Compiled (.jar or .class) file name(s): _______N/A_________________
+Compiled (.jar or .class) file name(s): _______N/A______________
 
 ________________________________________________________________
 
@@ -43,11 +43,12 @@ ________________________________________________________________
 ________________________________________________________________
 
 Additional comments (including problems and extra credit):
+
 Our trees are randomly generated so that's cool.
 ________________________________________________________________
 Our scene simulates a night and day cycle, so you have to hold
 ________________________________________________________________
-hold e to make time go forward (or e to make time go back!)
+hold `e` to make time go forward (or `q` to make time go back!)
 ________________________________________________________________
-W makes the moon a new moon. (so you only see this effect at night.)
+`w` makes the moon a new moon. (so you only see this effect at night.)
 ________________________________________________________________
